@@ -59,7 +59,6 @@ def test_call():
     client.close()
     time.sleep(2)
     cls()
-    cls()
     return main()
 
 
