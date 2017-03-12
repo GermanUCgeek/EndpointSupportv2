@@ -5,7 +5,7 @@ import os
 
 
 
-def main():
+def testing():
     #function for calling the different test functions
     print("Choose your sub program:\n"
           "1 for testing point to point call with manual input \n"
@@ -59,7 +59,7 @@ def test_call():
     client.close()
     time.sleep(2)
     cls()
-    return main()
+    return testing()
 
 
-main()
+testing()
