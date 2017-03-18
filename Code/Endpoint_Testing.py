@@ -5,18 +5,22 @@ import os
 
 
 def main():
-    # function for calling the different test functions
-    print("Choose your sub program:\n"
-          "1 for testing point to point call with manual input \n"
-          )
-    prog = input("Your choice: ")
-    if prog == "1":
-        test_call()
-    elif prog == "7":
-        test_version()
+    # asking for CSV file import for IP address batch job
+    print("You want to use a CSV file for IP address import Import?")
+    csv_select = input("Your Choice (yes/no): ")
+    if csv_select == "yes":
+        csv_import()
     else:
-        cls()
-        main()
+        # function for calling the different test functions
+        print("Choose your sub program:\n"
+              "1 for testing point to point call with manual input \n"
+              )
+        prog = input("Your choice: ")
+        if prog == "1":
+            test_call()
+        else:
+            cls()
+            main()
 
 
 def cls():
@@ -32,7 +36,8 @@ def test_call():
         destination = input("Call destination: ")
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect(hostname=host, username=username, password=password, port=22, look_for_keys=False, allow_agent=False)
+        client.connect(hostname=host, username=username, password=password, port=22, look_for_keys=False,
+                       allow_agent=False)
         client_shell = client.invoke_shell()
         client_shell.recv(1024)
         time.sleep(2)
@@ -63,10 +68,13 @@ def test_call():
         cls()
         return main()
     except TimeoutError as err:
-        print('SSH connection error, please check entered information\n',err)
+        print('SSH connection error, please check entered information\n', err)
         test_call()
 
 
+def csv_import():
+    print("CSV Import")
+    return main()
 
 
 main()
