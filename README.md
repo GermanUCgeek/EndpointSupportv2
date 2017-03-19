@@ -14,4 +14,4 @@ Version Initial Version
 Requirements for Script usage:
 - IP address of endpoint
 - User with privileges to access Command Line Interface of endpoint via SSH
-- Number for test call
+- Destination for test call
