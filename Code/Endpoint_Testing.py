@@ -17,11 +17,15 @@ def main():
               )
         prog = input("Your choice: ")
         if prog == "1":
-            user=input("Insert admin user:")
-            eppw=input("Insert admin password:")
-            endpoint=input("Insert Endpoint IP:")
-            epOS=input("Insert endpoint OS (TC,CTS):")
-            print(epOS[1])
+            epOS = []
+            user = []
+            eppw = []
+            endpoint = []
+            user.append(input("Insert admin user:"))
+            eppw.append(input("Insert admin password:"))
+            endpoint.append(input("Insert Endpoint IP:"))
+            epOS.append(input("Insert endpoint OS (TC,CTS):"))
+            print(epOS[0])
             test_call(user,eppw,endpoint,epOS)
         else:
             cls()
@@ -94,7 +98,7 @@ def test_call(usernames,passwords,hosts,typeOS):
 
     except TimeoutError as err:
         print('SSH connection error, please check entered information\n', err)
-        test_call()
+        main()
 
 
 def csv_import():
