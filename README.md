@@ -1,4 +1,4 @@
-# EndpointSupportv2
+# EndpointSupport Python Tool
 
 Version 0.2
 - Possibility use an CSV file to make mass test calls to the same test destination.
