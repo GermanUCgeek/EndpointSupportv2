@@ -6,30 +6,29 @@ import csv
 
 def main():
     # asking for CSV file import for IP address batch job
-    print("You want to use a CSV file for IP address import Import?")
-    csv_select = input("Your Choice (yes/no): ")
-    if csv_select == "yes":
+
+    # function for calling the different test functions
+    print("Choose your sub program:\n"
+        "1 for testing point to point call with manual input \n"
+        "2 for testing point to point call with CSV import \n"
+        )
+    prog = input("Your choice: ")
+    if prog == "1":
+        epOS = []
+        user = []
+        eppw = []
+        endpoint = []
+        user.append(input("Insert admin user:"))
+        eppw.append(input("Insert admin password:"))
+        endpoint.append(input("Insert Endpoint IP:"))
+        epOS.append(input("Insert endpoint OS (TC,CTS):"))
+        print(epOS[0])
+        test_call(user,eppw,endpoint,epOS)
+    elif prog == "2":
         csv_import()
     else:
-        # function for calling the different test functions
-        print("Choose your sub program:\n"
-              "1 for testing point to point call with manual input \n"
-              )
-        prog = input("Your choice: ")
-        if prog == "1":
-            epOS = []
-            user = []
-            eppw = []
-            endpoint = []
-            user.append(input("Insert admin user:"))
-            eppw.append(input("Insert admin password:"))
-            endpoint.append(input("Insert Endpoint IP:"))
-            epOS.append(input("Insert endpoint OS (TC,CTS):"))
-            print(epOS[0])
-            test_call(user,eppw,endpoint,epOS)
-        else:
-            cls()
-            main()
+        cls()
+        main()
 
 
 def cls():
@@ -40,7 +39,6 @@ def cls():
 def test_call(usernames,passwords,hosts,typeOS):
     try:
         destination = input("Call destination: ")
-        print(typeOS)
         for i, host in enumerate(hosts):
             if typeOS[i] == 'TC':
                 username=usernames[i]
