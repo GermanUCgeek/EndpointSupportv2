@@ -90,6 +90,56 @@ def test_call(usernames,passwords,hosts,typeOS):
                 client_shell.send("show call status \n")
                 time.sleep(2)
                 client_shell.send("call end \n")
+            elif typeOS[i] == 'IX':
+                username=usernames[i]
+                password=passwords[i]
+                client = paramiko.SSHClient()
+                client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                client.connect(hostname=host, username=username, password=password, port=22, look_for_keys=False,
+                               allow_agent=False)
+                client_shell = client.invoke_shell()
+                client_shell.recv(1024)
+                time.sleep(2)
+                client_shell.send("call start" + destination + "\n")
+                time.sleep(10)
+                client_shell.send("show call status \n")
+                time.sleep(2)
+                client_shell.send("call end \n")
+            elif typeOS[i] == 'CE':
+                username=usernames[i]
+                password=passwords[i]
+                client = paramiko.SSHClient()
+                client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                client.connect(hostname=host, username=username, password=password, port=22, look_for_keys=False,
+                               allow_agent=False)
+                client_shell = client.invoke_shell()
+                client_shell.recv(1024)
+                time.sleep(2)
+                client_shell.send("xcommand Dial Number:" + destination + "\n")
+                time.sleep(4)
+                #
+                # Module for Authentication on CE based endpoint based on the credentials insert earlier
+                #
+                loginmanager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+                # this creates a password manager
+                endpointurl = 'http://' + host + '/getxml?location=/Status/Call'
+                # creates endpoint URL based on earlier provided host IP
+                loginmanager.add_password(None, endpointurl, username, password)
+                # because we have put None at the start it will always
+                # use this username/password combination for urls
+                # for which `theurl` is a super-url
+                authhandler = urllib.request.HTTPBasicAuthHandler(loginmanager)
+                # create the AuthHandler
+                opener = urllib.request.build_opener(authhandler)
+                urllib.request.install_opener(opener)
+                responseString = urllib.request.urlopen(endpointurl).read().decode("utf-8")
+                # makes the XML request from endpoint for
+                print(responseString)
+                time.sleep(2)
+                client_shell.send("xcommand call disconnect\n")
+                client.close()
+                time.sleep(2)
+                cls()
             else:
                 print("Invalid Entry in CSV File for TypeSelect")
         return main()
