@@ -37,6 +37,7 @@ def cls():
 
 
 def test_call(usernames,passwords,hosts,typeOS):
+    #Test call module with the commands for the different kind of endpoints
     try:
         destination = input("Call destination: ")
         for i, host in enumerate(hosts):
